@@ -4,6 +4,14 @@
     "user": "root",
     "password": "000000",
     "database": "testdb",
-    "tablename": "test",
-    "charset": "utf8mb4"
+    "tableName": "test2",
+    "dropWhenCreate": true,
+    "charset": "utf8mb4",
+    "count": 10,
+    "nullPercentage": 50,
+    "columns": {
+        "id": ["int(5)"," unsigned COMMENT 'id'"],
+        "idx": ["int(3)"," unsigned COMMENT 'id'"],
+        "name": ["varchar(32)"," NOT NULL COMMENT 'name'"]
+    }
 }
