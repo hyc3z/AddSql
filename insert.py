@@ -25,7 +25,7 @@ def createTable(cursor, tablename, columns, drop=False):
         sql += ","
     sql = sql[:-1]
     sql += ")"
-    print(sql)
+    # print(sql)
     cursor.execute(sql)
 
 
@@ -35,15 +35,52 @@ def getType(rawType):
     else:
         return [rawType.strip().split()[0].lower(), 256]
 
+def randomChar(charType="all"):
+    if charType.lower() == "all":
+        return randomCharAll()
+    elif charType.lower() == "numeric":
+        return randomNumeric()
+    elif charType.lower() == "lowercase":
+        return randomLower()
+    elif charType.lower() == "uppercase":
+        return randomUpper()
+    elif charType.lower() == "alphanumeric":
+        return randomAlphanumeric()
+    else:
+        return randomCharAll()
 
-def randomChar():
-    return chr(random.randint(33,126))
+
+def randomCharAll():
+    return chr(random.randint(33, 126))
+
+def randomNumeric():
+    return chr(random.randint(48, 57))
 
 
-def randomData(columns, num, nullPercentage=0):
+def randomUpper():
+    return chr(random.randint(65, 90))
+
+
+def randomLower():
+    return chr(random.randint(97, 122))
+
+
+def randomAlphanumeric():
+    choice = random.randint(1, 3)
+    if choice == 1:
+        return randomUpper()
+    elif choice == 2:
+        return randomLower()
+    else:
+        return randomNumeric()
+
+
+def randomData(columns, num, charType, nullPercentage=0):
     newList = []
     t = time.time()
     for i in range(1, num + 1):
+        if i % (int(num/100)) == 0:
+            print(i, "...")
         dataList = []
         for column in columns:
             dataType = getType(columns[column][0])
@@ -56,29 +93,29 @@ def randomData(columns, num, nullPercentage=0):
             else:
                 if dataType[0] == 'tinyint':
                     if unsigned:
-                        dataList.append(random.randint(0, min(255, 2 ** dataType[1])))
+                        dataList.append(random.randint(0, min(255, 10 ** dataType[1])))
                     else:
-                        dataList.append(random.randint(max(-128, -2 ** dataType[1]), min(127, 2 ** dataType[1])))
+                        dataList.append(random.randint(max(-128, -10 ** dataType[1]), min(127, 10 ** dataType[1])))
                 elif dataType[0] == 'smallint':
                     if unsigned:
-                        dataList.append(random.randint(0, min(65535, 2**dataType[1])))
+                        dataList.append(random.randint(0, min(65535, 10**dataType[1])))
                     else:
-                        dataList.append(random.randint(max(-32768, -2 ** dataType[1]), min(32767, 2 ** dataType[1])))
+                        dataList.append(random.randint(max(-32768, -10 ** dataType[1]), min(32767, 10 ** dataType[1])))
                 elif dataType[0] == 'mediumint':
                     if unsigned:
-                        dataList.append(random.randint(0, min(16777215, 2**dataType[1])))
+                        dataList.append(random.randint(0, min(16777215, 10  **dataType[1])))
                     else:
-                        dataList.append(random.randint(max(-8388608, -2 ** dataType[1]), min(8388607, 2 ** dataType[1])))
+                        dataList.append(random.randint(max(-8388608, -10  ** dataType[1]), min(8388607, 10  ** dataType[1])))
                 elif dataType[0] == 'int':
                     if unsigned:
-                        dataList.append(random.randint(0, min(4294967295, 2**dataType[1])))
+                        dataList.append(random.randint(0, min(4294967295, 10  **dataType[1])))
                     else:
-                        dataList.append(random.randint(max(-2147483648, -2 ** dataType[1]), min(2147483648, 2 ** dataType[1])))
+                        dataList.append(random.randint(max(-2147483648, -10  ** dataType[1]), min(2147483648, 10  ** dataType[1])))
                 elif dataType[0] == 'bigint':
                     if unsigned:
-                        dataList.append(random.randint(0, min(18446744073709551615, 2**dataType[1])))
+                        dataList.append(random.randint(0, min(18446744073709551615, 10  **dataType[1])))
                     else:
-                        dataList.append(random.randint(max(-9223372036854775808, -2 ** dataType[1]), min(9223372036854775807, 2 ** dataType[1])))
+                        dataList.append(random.randint(max(-9223372036854775808, -10  ** dataType[1]), min(9223372036854775807, 10  ** dataType[1])))
                 elif dataType[0] == 'bit':
                     string = ""
                     for _ in range(dataType[1]):
@@ -100,15 +137,16 @@ def randomData(columns, num, nullPercentage=0):
                     else:
                         string = ""
                         for _ in range(dataType[1]):
-                            string += randomChar()
+                            string += randomChar(charType)
                         dataList.append(string)
         newList.append(tuple(dataList))
-    print("*"*5+"generate list ok,spent "+str(time.time()-t)+"*"*5)
-    print(newList)
+    print("*"*5,"generate list ok,spent ",str(time.time()-t),"*"*5)
+    #print(newList)
     return newList
 
 
 def myInsert(conn, cursor, tablename, columns, values):
+    print(">>>inserting...")
     try:
         t = time.time()
         sql = "insert into "+tablename+" ("
@@ -124,7 +162,7 @@ def myInsert(conn, cursor, tablename, columns, values):
         conn.commit()
         cursor.close()
         conn.close()
-        print('insert ok, spent ', time.time()-t)
+        print("*"*5, 'insert ok, spent ', time.time()-t, "*"*5)
     except Exception as e:
         print(e)
 
@@ -136,7 +174,7 @@ def main():
     conn = connect(data['host'], data['port'], data['user'], data['password'], data['database'], data['charset'])
     cursor = conn.cursor(cursor=pymysql.cursors.DictCursor)
     createTable(cursor, data['tableName'], data["columns"], drop=data["dropWhenCreate"])
-    newList = randomData(data["columns"], data["count"], data["nullPercentage"])
+    newList = randomData(data["columns"], data["count"], nullPercentage=data["nullPercentage"], charType=data["charType"])
     myInsert(conn, cursor, data['tableName'], data["columns"], newList)
 
 

@@ -7,11 +7,12 @@
     "tableName": "test2",
     "dropWhenCreate": true,
     "charset": "utf8mb4",
-    "count": 10,
-    "nullPercentage": 50,
+    "count": 1000000,
+    "nullPercentage": 0,
+    "charType": "all",
     "columns": {
         "id": ["int(5)"," unsigned COMMENT 'id'"],
-        "idx": ["int(3)"," unsigned COMMENT 'id'"],
+        "idx": ["int(2)"," unsigned COMMENT 'id'"],
         "name": ["varchar(32)"," NOT NULL COMMENT 'name'"]
     }
 }
