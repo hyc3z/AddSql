@@ -5,7 +5,7 @@ This simple script can generate random data based on the Datatypes defined in [c
 
 json format:
 !['addsql.png'](pic/addsql.png)
-#####tableConfig
+##### tableConfig
 settings for creating a new table,like
 ```json
 "tableConfig": {
@@ -21,7 +21,7 @@ settings for creating a new table,like
 Insert 100 new records into the table containing generated data.
 
 
-#####dataSetup
+##### dataSetup
 data attributes, for example:
 ```json
 "dataSetup": {
@@ -34,7 +34,7 @@ data attributes, for example:
                         "comment": "id"
                     },
 ```
-#####dataGenerator
+##### dataGenerator
 settings for data generator that generates random data.
 ```json
 "dataGenerator": {
