@@ -1,6 +1,6 @@
 
 import random
-from limits import *
+from utils.limits import *
 
 
 def randomChar(charType="all"):

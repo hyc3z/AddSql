@@ -1,9 +1,9 @@
 import json
-from operations import *
+from utils.operations import *
 
 
 def main():
-    with open("config.json", 'r', encoding="UTF-8") as f:
+    with open("config/config.json", 'r', encoding="UTF-8") as f:
         data = json.load(f)
     conn = connect(data['host'], data['port'], data['user'], data['password'])
     cursor = conn.cursor(cursor=pymysql.cursors.DictCursor)

@@ -1,7 +1,6 @@
 import pymysql
-import random
 import time
-from random_generator import *
+from utils.random_generator import *
 
 
 def connect(host,port,user,password):

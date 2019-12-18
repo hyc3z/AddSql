@@ -1,10 +1,10 @@
 # AddSql
 A tool for mysql database testing.
 
-This simple script can generate random data based on the Datatypes defined in [config.json](config.json). You can also set certain percentage of the data to (NULL).
+This simple script can generate random data based on the Datatypes defined in [config.json](config/config.json). You can also set certain percentage of the data to (NULL).
 
 json format:
-!['addsql.png'](addsql.png)
+!['addsql.png'](pic/addsql.png)
 #####tableConfig
 settings for creating a new table,like
 ```json
