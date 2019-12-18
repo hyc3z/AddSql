@@ -17,6 +17,10 @@ settings for creating a new table,like
                 "generateCount": 1
             },
 ```
+* "generateCount":100<br>
+Insert 100 new records into the table containing generated data.
+
+
 #####dataSetup
 data attributes, for example:
 ```json

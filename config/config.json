@@ -7,6 +7,7 @@
         "test2": {
             "tableConfig": {
                 "database": "testdb",
+                "createDatabaseIfNotExists":true,
                 "dropIfExists": false,
                 "charset": "utf8mb4",
                 "engine": "innodb",

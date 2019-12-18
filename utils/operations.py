@@ -56,6 +56,8 @@ def createTable(conn, cursor, table, tableName):
     config = table["tableConfig"]
     data = table["data"]
     database = config["database"]
+    if "createDatabaseIfNotExists" in config and config['createDatabaseIfNotExists']:
+        cursor.execute("create database if not exists {};".format(database))
     cursor.execute("use " + database)
     if config["dropIfExists"]:
         cursor.execute("drop table if exists " + table)
