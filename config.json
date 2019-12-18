@@ -3,16 +3,64 @@
     "port": 3306,
     "user": "root",
     "password": "000000",
-    "database": "testdb",
-    "tableName": "test2",
-    "dropWhenCreate": true,
-    "charset": "utf8mb4",
-    "count": 1000000,
-    "nullPercentage": 0,
-    "charType": "all",
-    "columns": {
-        "id": ["int(5)"," unsigned COMMENT 'id'"],
-        "idx": ["int(2)"," unsigned COMMENT 'id'"],
-        "name": ["varchar(32)"," NOT NULL COMMENT 'name'"]
+    "tables": {
+        "test2": {
+            "tableConfig": {
+                "database": "testdb",
+                "dropIfExists": false,
+                "charset": "utf8mb4",
+                "engine": "innodb",
+                "comment": "测试表",
+                "generateCount": 1
+            },
+            "data":{
+                "id": {
+                    "dataSetup": {
+                        "dataType": "int",
+                        "length/set": "10",
+                        "unsigned": true,
+                        "allowNull": false,
+                        "zerofill": false,
+                        "hasDefault": false,
+                        "comment": "id"
+                    },
+                    "dataGenerator": {
+                        "fillType": "random",
+                        "nullPercentage": 0
+                    }
+                },
+                "idx": {
+                    "dataSetup": {
+                        "dataType": "int",
+                        "length/set": "2",
+                        "unsigned": false,
+                        "allowNull": false,
+                        "zerofill": false,
+                        "hasDefault": true,
+                        "default": 0,
+                        "comment": "idx"
+                    },
+                    "dataGenerator": {
+                        "fillType": "selective",
+                        "fillEnum": [0,1,2,3,4,5],
+                        "nullPercentage": 0
+                    }
+                },
+                "name": {
+                    "dataSetup": {
+                        "dataType": "varchar",
+                        "length/set": "32",
+                        "allowNull": false,
+                        "hasDefault": false,
+                        "comment": "name"
+                    },
+                    "dataGenerator": {
+                        "fillType": "random",
+                        "fillChar": "alphanumeric",
+                        "nullPercentage": 0
+                    }
+                }
+            }
+        }
     }
 }
