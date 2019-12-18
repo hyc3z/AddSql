@@ -1,5 +1,5 @@
 import json
-from insert_sql import *
+from operations import *
 
 
 def main():
