@@ -3,6 +3,8 @@ A tool for mysql database testing.
 
 This simple script can generate random data based on the Datatypes defined in [config.json](config/config.json). You can also set certain percentage of the data to (NULL).
 
+Edit the settings in [config/config.json](config/config.json) to make it work.
+
 json format:
 !['addsql.png'](pic/addsql.png)
 ##### tableConfig
@@ -68,3 +70,5 @@ The filled characters are randomly picked alphanumeric ASCII characters.
 Currently supported datatypes:
 TINYINT,SMALLINT,MEDIUMINT,INT,BIGINT,BIT,FLOAT,DOUBLE,VARCHAR.
 
+TODO:
+Editor,dump sql to 
